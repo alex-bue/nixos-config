@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-let user = "%USER%"; in
+let user = "ab"; in
 
 {
   imports = [
