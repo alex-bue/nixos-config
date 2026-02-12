@@ -35,13 +35,13 @@ let name = "%NAME%";
       # Remove history data we don't want to see
       export HISTIGNORE="pwd:ls:cd"
 
-      # Emacs is my editor
-      export ALTERNATE_EDITOR=""
-      export EDITOR="emacsclient -t"
-      export VISUAL="emacsclient -c -a emacs"
+      # Editor defaults
+      export ALTERNATE_EDITOR="nvim"
+      export EDITOR="nvim"
+      export VISUAL="nvim"
 
-      e() {
-          emacsclient -t "$@"
+      v() {
+          nvim "$@"
       }
 
       # nix shortcuts

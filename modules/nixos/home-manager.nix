@@ -16,7 +16,7 @@ let
 
   polybar-config = pkgs.replaceVars ./config/polybar/config.ini {
     font0 = "DejaVu Sans:size=12;3";
-    font1 = "feather:size=12;3"; # from overlay
+    font1 = "Font Awesome 6 Free:size=12;3";
   };
 
   polybar-modules = builtins.readFile ./config/polybar/modules.ini;
