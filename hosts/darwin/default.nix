@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
-let user = "ab"; in
+let
+  user = "ab";
+in
 
 {
   imports = [
@@ -8,28 +10,33 @@ let user = "ab"; in
     ../../modules/shared
   ];
 
-  nix = {
-    package = pkgs.nix;
+  # Determinate manages Nix and nix.conf, so disable nix-darwin's Nix management.
+  nix.enable = false;
 
-    settings = {
-      trusted-users = [ "@admin" "${user}" ];
-      substituters = [ "https://nix-community.cachix.org" "https://cache.nixos.org" ];
-      trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
-    };
+  # nix = {
+  #   package = pkgs.nix;
+  #
+  #   settings = {
+  #     trusted-users = [ "@admin" "${user}" ];
+  #     substituters = [ "https://nix-community.cachix.org" "https://cache.nixos.org" ];
+  #     trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+  #   };
+  #
+  #   gc = {
+  #     automatic = true;
+  #     interval = { Weekday = 0; Hour = 2; Minute = 0; };
+  #     options = "--delete-older-than 30d";
+  #   };
+  #
+  #   extraOptions = ''
+  #     experimental-features = nix-command flakes
+  #   '';
+  # };
 
-    gc = {
-      automatic = true;
-      interval = { Weekday = 0; Hour = 2; Minute = 0; };
-      options = "--delete-older-than 30d";
-    };
-
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+  environment = {
+    systemPackages = import ../../modules/shared/packages.nix { inherit pkgs; };
+    shells = [ pkgs.zsh ];
   };
-
-
-  environment.systemPackages = import ../../modules/shared/packages.nix { inherit pkgs; };
 
   system = {
     checks.verifyNixPath = false;
