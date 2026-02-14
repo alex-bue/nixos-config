@@ -1,4 +1,10 @@
-{ config, pkgs, lib, home-manager, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  home-manager,
+  ...
+}:
 
 let
   user = "ab";
@@ -20,7 +26,7 @@ in
 
   homebrew = {
     enable = true;
-    casks = pkgs.callPackage ./casks.nix {};
+    casks = pkgs.callPackage ./casks.nix { };
     # onActivation.cleanup = "uninstall";
 
     # These app IDs are from using the mas CLI app
@@ -41,23 +47,30 @@ in
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} = { pkgs, config, lib, ... }:{
-      home = {
-        enableNixpkgsReleaseCheck = false;
-        packages = pkgs.callPackage ./packages.nix {};
-        file = lib.mkMerge [
-          sharedFiles
-          additionalFiles
-        ];
-        stateVersion = "23.11";
-      };
-      # programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };
-      programs = {};
+    users.${user} =
+      {
+        pkgs,
+        config,
+        lib,
+        ...
+      }:
+      {
+        home = {
+          enableNixpkgsReleaseCheck = false;
+          packages = pkgs.callPackage ./packages.nix { };
+          file = lib.mkMerge [
+            sharedFiles
+            additionalFiles
+          ];
+          stateVersion = "23.11";
+        };
+        # programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };
+        programs = { };
 
-      # Marked broken Oct 20, 2022 check later to remove this
-      # https://github.com/nix-community/home-manager/issues/3344
-      manual.manpages.enable = false;
-    };
+        # Marked broken Oct 20, 2022 check later to remove this
+        # https://github.com/nix-community/home-manager/issues/3344
+        manual.manpages.enable = false;
+      };
   };
 
   # Fully declarative dock using the latest from Nix Store
