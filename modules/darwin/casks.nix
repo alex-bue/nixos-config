@@ -1,32 +1,21 @@
 _:
 
 [
-  # Development Tools
-  "homebrew/cask/docker"
-  "visual-studio-code"
-  "iterm2"
-  "postman"
-  "cursor"
-
-  # Productivity Tools
-  "raycast"
-
-  # Browsers
+  "alfred"
+  "anki"
+  "anydesk"
+  "bitwarden"
+  # "betterdisplay"
+  "discord"
+  "firefox"
   "google-chrome"
-
-  # Communication Tools - Examples (uncomment as needed)
-  # "discord"
-  # "notion"
-  # "slack"
-  # "telegram"
-  # "zoom"
-
-  # Utility Tools - Examples (uncomment as needed)
-  # "syncthing"
-  # "1password"
-  # "rectangle"
-
-  # Entertainment Tools - Examples (uncomment as needed)
-  # "spotify"
-  # "vlc"
+  "hiddenbar"
+  "iina"
+  "karabiner-elements"
+  "nikitabobko/tap/aerospace"
+  "obsidian"
+  # "raycast"
+  "spotify"
+  "scroll-reverser"
+  "visual-studio-code"
 ]

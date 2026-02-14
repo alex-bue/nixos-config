@@ -1,34 +1,36 @@
 { pkgs }:
 
-with pkgs; [
+with pkgs;
+[
   # General packages for development and system management
-  alacritty
+  wezterm
   bash-completion
   bat
   btop
+  chezmoi
   coreutils
-  killall
-  openssh
-  sqlite
+  eza
+  ffmpeg
+  fd
+  git
+  graphviz
+  imagemagick
+  neovim
+  starship
   wget
+  yazi
+  yq-go
+  yt-dlp
+  zoxide
   zip
 
   # Encryption and security tools
-  age
   gnupg
+  bitwarden-cli
 
   # Cloud-related tools and SDKs
   docker
   docker-compose
-
-  # Media-related packages
-  dejavu_fonts
-  fd
-  font-awesome
-  hack-font
-  noto-fonts
-  noto-fonts-color-emoji
-  meslo-lgs-nf
 
   # Node.js development tools
   nodejs_24
@@ -36,23 +38,21 @@ with pkgs; [
   # Text and terminal utilities
   htop
   jetbrains-mono
+  nerd-fonts.jetbrains-mono
   jq
+  nixfmt
   ripgrep
   tree
   tmux
   unzip
   zsh-powerlevel10k
-  
+
   # Development tools
   curl
   gh
-  terraform
-  kubectl
-  awscli2
   lazygit
   fzf
-  direnv
-  
+
   # Programming languages and runtimes
   go
   rustc
@@ -61,5 +61,4 @@ with pkgs; [
 
   # Python packages
   python3
-  virtualenv
 ]
