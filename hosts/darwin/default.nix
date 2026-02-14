@@ -37,34 +37,108 @@ let user = "ab"; in
     stateVersion = 5;
 
     defaults = {
+      ".GlobalPreferences" = {
+        "com.apple.mouse.scaling" = 0.6875;
+      };
+
       NSGlobalDomain = {
-        AppleShowAllExtensions = true;
+        # keyboard
+        KeyRepeat = 2; # Values: 120, 90, 60, 30, 12, 6, 2
+        InitialKeyRepeat = 10; # Values: 120, 94, 68, 35, 25, 15
         ApplePressAndHoldEnabled = false;
 
-        KeyRepeat = 2; # Values: 120, 90, 60, 30, 12, 6, 2
-        InitialKeyRepeat = 15; # Values: 120, 94, 68, 35, 25, 15
+        AppleInterfaceStyleSwitchesAutomatically = true;
+
+        # spelling and prediction
+        NSAutomaticCapitalizationEnabled = false;
+        NSAutomaticDashSubstitutionEnabled = false;
+        NSAutomaticInlinePredictionEnabled = true;
+        NSAutomaticPeriodSubstitutionEnabled = false;
+        NSAutomaticQuoteSubstitutionEnabled = false;
+        NSAutomaticSpellingCorrectionEnabled = false;
+
+        # windows
+        NSAutomaticWindowAnimationsEnabled = false;
+        NSWindowShouldDragOnGesture = true;
+
+        # menubar
+        _HIHideMenuBar = false;
 
         "com.apple.mouse.tapBehavior" = 1;
         "com.apple.sound.beep.volume" = 0.0;
         "com.apple.sound.beep.feedback" = 0;
+        "com.apple.trackpad.scaling" = 1.5;
       };
 
       dock = {
-        autohide = false;
+        autohide = true;
+        autohide-delay = 0.0;
+        autohide-time-modifier = 0.0;
         show-recents = false;
         launchanim = true;
         orientation = "bottom";
         tilesize = 48;
+        expose-group-apps = true; # nice to have for aerospace
+        mru-spaces = false; # rearrange spaces on recent use
+        persistent-apps = [
+          {
+            app = "/System/Applications/System Settings.app";
+          }
+          {
+            app = "/Applications/Google Chrome.app";
+          }
+        ];
       };
 
       finder = {
+        AppleShowAllExtensions = true;
+        FXDefaultSearchScope = null;
+        FXPreferredViewStyle = "clmv";
+        FXRemoveOldTrashItems = true;
+        NewWindowTarget = "Home";
+        QuitMenuItem = false;
+        ShowExternalHardDrivesOnDesktop = true;
+        ShowPathbar = true;
+        ShowStatusBar = true;
         _FXShowPosixPathInTitle = false;
+      };
+
+      hitoolbox = {
+        AppleFnUsageType = "Change Input Source";
+      };
+
+      screencapture = {
+        target = "clipboard";
+      };
+
+      spaces = {
+        spans-displays = true;
       };
 
       trackpad = {
         Clicking = true;
+        TrackpadRightClick = true;
         TrackpadThreeFingerDrag = true;
+        TrackpadPinch = true;
+        TrackpadRotate = true;
+      };
+
+      universalaccess = {
+        reduceMotion = false;
+      };
+
+      WindowManager = {
+        AppWindowGroupingBehavior = true;
+        EnableStandardClickToShowDesktop = false;
+        EnableTilingByEdgeDrag = false;
+        EnableTilingOptionAccelerator = false;
+        EnableTopTilingByEdgeDrag = false;
       };
     };
+
+    keyboard = {
+      enableKeyMapping = true;
+    };
+
   };
 }
