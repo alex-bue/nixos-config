@@ -42,7 +42,7 @@
       disko,
     }@inputs:
     let
-      user = "ab";
+      lib = nixpkgs.lib;
       linuxSystems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -51,7 +51,14 @@
         "aarch64-darwin"
         "x86_64-darwin"
       ];
-      forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
+
+      hosts = import ./hosts/hosts.nix;
+      homes = import ./hosts/homes.nix { inherit lib hosts; };
+      darwinHosts = lib.filterAttrs (_: host: host.type == "darwin") hosts;
+      nixosHosts = lib.filterAttrs (_: host: host.type == "nixos") hosts;
+
+      forAllSystems = f: lib.genAttrs (linuxSystems ++ darwinSystems) f;
+
       devShell =
         system:
         let
@@ -70,6 +77,7 @@
               '';
             };
         };
+
       mkApp = scriptName: system: {
         type = "app";
         program = "${
@@ -81,6 +89,7 @@
           '')
         }/bin/${scriptName}";
       };
+
       mkLinuxApps = system: {
         "apply" = mkApp "apply" system;
         "build-switch" = mkApp "build-switch" system;
@@ -90,6 +99,7 @@
         "check-keys" = mkApp "check-keys" system;
         "install" = mkApp "install" system;
       };
+
       mkDarwinApps = system: {
         "apply" = mkApp "apply" system;
         "build" = mkApp "build" system;
@@ -103,23 +113,22 @@
     in
     {
       devShells = forAllSystems devShell;
-      apps =
-        nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
+      apps = lib.genAttrs linuxSystems mkLinuxApps // lib.genAttrs darwinSystems mkDarwinApps;
 
-      darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (
-        system:
-        let
-          user = "ab";
-        in
+      darwinConfigurations = lib.mapAttrs (
+        hostName: host:
         darwin.lib.darwinSystem {
-          inherit system;
-          specialArgs = inputs;
+          system = host.system;
+          specialArgs = inputs // {
+            inherit hostName;
+            hostUser = host.user;
+          };
           modules = [
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
             {
               nix-homebrew = {
-                inherit user;
+                user = host.user;
                 enable = true;
                 taps = {
                   "homebrew/homebrew-core" = homebrew-core;
@@ -130,16 +139,29 @@
                 autoMigrate = true;
               };
             }
-            ./hosts/darwin
-          ];
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = {
+                  inherit hostName;
+                  hostUser = host.user;
+                };
+                users.${host.user} = import host.homeModule;
+              };
+            }
+          ] ++ host.modules;
         }
-      );
+      ) darwinHosts;
 
-      nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (
-        system:
+      nixosConfigurations = lib.mapAttrs (
+        hostName: host:
         nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = inputs;
+          system = host.system;
+          specialArgs = inputs // {
+            inherit hostName;
+            hostUser = host.user;
+          };
           modules = [
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager
@@ -147,12 +169,27 @@
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users.${user} = import ./modules/nixos/home-manager.nix;
+                extraSpecialArgs = {
+                  inherit hostName;
+                  hostUser = host.user;
+                };
+                users.${host.user} = import host.homeModule;
               };
             }
-            ./hosts/nixos
-          ];
+          ] ++ host.modules;
         }
-      );
+      ) nixosHosts;
+
+      homeConfigurations = lib.mapAttrs (
+        _name: home:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${home.system};
+          extraSpecialArgs = {
+            hostName = home.hostName;
+            hostUser = home.user;
+          };
+          modules = [ home.module ];
+        }
+      ) homes;
     };
 }

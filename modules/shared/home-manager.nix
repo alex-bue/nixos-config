@@ -1,7 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, hostUser ? "ab", ... }:
 
 let name = "Alexander Büscher";
-    user = "ab";
+    user = hostUser;
     email = "alexanderbuescher@outlook.com"; in
 {
   # Shared shell configuration
@@ -60,12 +60,11 @@ let name = "Alexander Büscher";
   git = {
     enable = true;
     ignores = [ "*.swp" ];
-    userName = name;
-    userEmail = email;
-    lfs = {
-      enable = true;
-    };
-    extraConfig = {
+    settings = {
+      user = {
+        name = name;
+        email = email;
+      };
       init.defaultBranch = "main";
       core = {
 	    editor = "vim";
@@ -73,6 +72,9 @@ let name = "Alexander Büscher";
       };
       pull.rebase = true;
       rebase.autoStash = true;
+    };
+    lfs = {
+      enable = true;
     };
   };
 

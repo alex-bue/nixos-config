@@ -1,46 +1,15 @@
-{ pkgs, ... }:
-
-let
-  user = "ab";
-in
-
+{ pkgs, hostUser ? "ab", ... }:
 {
-  imports = [
-    ../../modules/darwin/home-manager.nix
-    ../../modules/shared
-  ];
-
-  # Determinate manages Nix and nix.conf, so disable nix-darwin's Nix management.
   nix.enable = false;
 
-  # nix = {
-  #   package = pkgs.nix;
-  #
-  #   settings = {
-  #     trusted-users = [ "@admin" "${user}" ];
-  #     substituters = [ "https://nix-community.cachix.org" "https://cache.nixos.org" ];
-  #     trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
-  #   };
-  #
-  #   gc = {
-  #     automatic = true;
-  #     interval = { Weekday = 0; Hour = 2; Minute = 0; };
-  #     options = "--delete-older-than 30d";
-  #   };
-  #
-  #   extraOptions = ''
-  #     experimental-features = nix-command flakes
-  #   '';
-  # };
-
   environment = {
-    systemPackages = import ../../modules/shared/packages.nix { inherit pkgs; };
+    systemPackages = import ../shared/packages.nix { inherit pkgs; };
     shells = [ pkgs.zsh ];
   };
 
   system = {
     checks.verifyNixPath = false;
-    primaryUser = user;
+    primaryUser = hostUser;
     stateVersion = 5;
 
     defaults = {
@@ -49,28 +18,19 @@ in
       };
 
       NSGlobalDomain = {
-        # keyboard
-        KeyRepeat = 2; # Values: 120, 90, 60, 30, 12, 6, 2
-        InitialKeyRepeat = 10; # Values: 120, 94, 68, 35, 25, 15
+        KeyRepeat = 2;
+        InitialKeyRepeat = 10;
         ApplePressAndHoldEnabled = false;
-
         AppleInterfaceStyleSwitchesAutomatically = true;
-
-        # spelling and prediction
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticDashSubstitutionEnabled = false;
         NSAutomaticInlinePredictionEnabled = true;
         NSAutomaticPeriodSubstitutionEnabled = false;
         NSAutomaticQuoteSubstitutionEnabled = false;
         NSAutomaticSpellingCorrectionEnabled = false;
-
-        # windows
         NSAutomaticWindowAnimationsEnabled = false;
         NSWindowShouldDragOnGesture = true;
-
-        # menubar
         _HIHideMenuBar = false;
-
         "com.apple.mouse.tapBehavior" = 1;
         "com.apple.sound.beep.volume" = 0.0;
         "com.apple.sound.beep.feedback" = 0;
@@ -85,15 +45,11 @@ in
         launchanim = true;
         orientation = "bottom";
         tilesize = 48;
-        expose-group-apps = true; # nice to have for aerospace
-        mru-spaces = false; # rearrange spaces on recent use
+        expose-group-apps = true;
+        mru-spaces = false;
         persistent-apps = [
-          {
-            app = "/System/Applications/System Settings.app";
-          }
-          {
-            app = "/Applications/Google Chrome.app";
-          }
+          { app = "/System/Applications/System Settings.app"; }
+          { app = "/Applications/Google Chrome.app"; }
         ];
       };
 
@@ -110,17 +66,9 @@ in
         _FXShowPosixPathInTitle = false;
       };
 
-      hitoolbox = {
-        AppleFnUsageType = "Change Input Source";
-      };
-
-      screencapture = {
-        target = "clipboard";
-      };
-
-      spaces = {
-        spans-displays = true;
-      };
+      hitoolbox.AppleFnUsageType = "Change Input Source";
+      screencapture.target = "clipboard";
+      spaces.spans-displays = true;
 
       trackpad = {
         Clicking = true;
@@ -130,9 +78,7 @@ in
         TrackpadRotate = true;
       };
 
-      universalaccess = {
-        reduceMotion = false;
-      };
+      universalaccess.reduceMotion = false;
 
       WindowManager = {
         AppWindowGroupingBehavior = true;
@@ -143,9 +89,20 @@ in
       };
     };
 
-    keyboard = {
-      enableKeyMapping = true;
-    };
+    keyboard.enableKeyMapping = true;
+  };
 
+  users.users.${hostUser} = {
+    name = hostUser;
+    home = "/Users/${hostUser}";
+    isHidden = false;
+    shell = pkgs.zsh;
+  };
+
+  homebrew = {
+    enable = true;
+    masApps = {
+      # "wireguard" = 1451685025;
+    };
   };
 }

@@ -1,9 +1,9 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, hostUser ? "ab", ... }:
 
 let
-  user = "ab";
+  user = hostUser;
   xdg_configHome  = "/home/${user}/.config";
-  shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib; };
+  shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib hostUser; };
   shared-files = import ../shared/files.nix { inherit config pkgs; };
 
   polybar-user_modules = builtins.readFile (pkgs.replaceVars ./config/polybar/user_modules.ini {
