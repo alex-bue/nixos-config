@@ -1,9 +1,8 @@
 { ... }:
 {
   imports = [
-    ../../modules/shared
-    ../../modules/darwin/defaults.nix
-    ../../modules/darwin/casks.nix
+    ../../darwin/default.nix
+    ../../darwin/casks.nix
   ];
 
   networking.hostName = "ab-mbp-m3";

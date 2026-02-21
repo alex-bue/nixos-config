@@ -13,7 +13,7 @@ let
   isWSL = wsl;
   isLinux = !darwin && !wsl;
 
-  machineConfig = ../hosts/${name}/defaults.nix;
+  machineConfig = ../hosts/${name}/default.nix;
   userHMConfig = ../hosts/${name}/home.nix;
 
   systemFunc =

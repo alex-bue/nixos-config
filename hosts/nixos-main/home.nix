@@ -1,6 +1,6 @@
 { ... }:
 {
   imports = [
-    ../../modules/nixos/home-manager.nix
+    ../../nixos/home.nix
   ];
 }

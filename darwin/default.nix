@@ -1,9 +1,13 @@
 { pkgs, hostUser ? "ab", ... }:
 {
+  imports = [
+    ../common/default.nix
+  ];
+
   nix.enable = false;
 
   environment = {
-    systemPackages = import ../shared/packages.nix { inherit pkgs; };
+    systemPackages = import ../common/packages.nix { inherit pkgs; };
     shells = [ pkgs.zsh ];
   };
 
