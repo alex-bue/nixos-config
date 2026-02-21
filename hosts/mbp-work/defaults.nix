@@ -9,7 +9,5 @@
   networking.hostName = "mbp-work";
 
   homebrew.casks = [
-    "dbeaver-community"
-    "firefox"
   ];
 }

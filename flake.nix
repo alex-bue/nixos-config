@@ -32,14 +32,9 @@
   outputs =
     {
       self,
-      darwin,
-      nix-homebrew,
-      homebrew-bundle,
-      homebrew-core,
-      homebrew-cask,
       home-manager,
       nixpkgs,
-      disko,
+      ...
     }@inputs:
     let
       lib = nixpkgs.lib;
@@ -52,10 +47,8 @@
         "x86_64-darwin"
       ];
 
-      hosts = import ./hosts/hosts.nix;
-      homes = import ./hosts/homes.nix { inherit lib hosts; };
-      darwinHosts = lib.filterAttrs (_: host: host.type == "darwin") hosts;
-      nixosHosts = lib.filterAttrs (_: host: host.type == "nixos") hosts;
+      mkSystem = import ./lib/mkSystem.nix { inherit nixpkgs inputs; };
+      mkHome = import ./lib/mkHome.nix { inherit home-manager nixpkgs; };
 
       forAllSystems = f: lib.genAttrs (linuxSystems ++ darwinSystems) f;
 
@@ -78,118 +71,45 @@
             };
         };
 
-      mkApp = scriptName: system: {
-        type = "app";
-        program = "${
-          (nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
-            #!/usr/bin/env bash
-            PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-            echo "Running ${scriptName} for ${system}"
-            exec ${self}/apps/${system}/${scriptName}
-          '')
-        }/bin/${scriptName}";
-      };
-
-      mkLinuxApps = system: {
-        "apply" = mkApp "apply" system;
-        "build-switch" = mkApp "build-switch" system;
-        "clean" = mkApp "clean" system;
-        "copy-keys" = mkApp "copy-keys" system;
-        "create-keys" = mkApp "create-keys" system;
-        "check-keys" = mkApp "check-keys" system;
-        "install" = mkApp "install" system;
-      };
-
-      mkDarwinApps = system: {
-        "apply" = mkApp "apply" system;
-        "build" = mkApp "build" system;
-        "build-switch" = mkApp "build-switch" system;
-        "clean" = mkApp "clean" system;
-        "copy-keys" = mkApp "copy-keys" system;
-        "create-keys" = mkApp "create-keys" system;
-        "check-keys" = mkApp "check-keys" system;
-        "rollback" = mkApp "rollback" system;
-      };
     in
     {
       devShells = forAllSystems devShell;
-      apps = lib.genAttrs linuxSystems mkLinuxApps // lib.genAttrs darwinSystems mkDarwinApps;
 
-      darwinConfigurations = lib.mapAttrs (
-        hostName: host:
-        darwin.lib.darwinSystem {
-          system = host.system;
-          specialArgs = inputs // {
-            inherit hostName;
-            hostUser = host.user;
-          };
-          modules = [
-            home-manager.darwinModules.home-manager
-            nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                user = host.user;
-                enable = true;
-                taps = {
-                  "homebrew/homebrew-core" = homebrew-core;
-                  "homebrew/homebrew-cask" = homebrew-cask;
-                  "homebrew/homebrew-bundle" = homebrew-bundle;
-                };
-                mutableTaps = false;
-                autoMigrate = true;
-              };
-            }
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = {
-                  inherit hostName;
-                  hostUser = host.user;
-                };
-                users.${host.user} = import host.homeModule;
-              };
-            }
-          ] ++ host.modules;
-        }
-      ) darwinHosts;
+      darwinConfigurations = {
+        mbp-work = mkSystem "mbp-work" {
+          system = "aarch64-darwin";
+          user = "ab";
+          darwin = true;
+        };
 
-      nixosConfigurations = lib.mapAttrs (
-        hostName: host:
-        nixpkgs.lib.nixosSystem {
-          system = host.system;
-          specialArgs = inputs // {
-            inherit hostName;
-            hostUser = host.user;
-          };
-          modules = [
-            disko.nixosModules.disko
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = {
-                  inherit hostName;
-                  hostUser = host.user;
-                };
-                users.${host.user} = import host.homeModule;
-              };
-            }
-          ] ++ host.modules;
-        }
-      ) nixosHosts;
+        ab-mbp-m3 = mkSystem "ab-mbp-m3" {
+          system = "aarch64-darwin";
+          user = "ab";
+          darwin = true;
+          homeManager = false;
+        };
+      };
 
-      homeConfigurations = lib.mapAttrs (
-        _name: home:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${home.system};
-          extraSpecialArgs = {
-            hostName = home.hostName;
-            hostUser = home.user;
-          };
-          modules = [ home.module ];
-        }
-      ) homes;
+      nixosConfigurations = {
+        nixos-main = mkSystem "nixos-main" {
+          system = "x86_64-linux";
+          user = "ab";
+        };
+      };
+
+      homeConfigurations = {
+        "ab@mbp-work" = mkHome {
+          name = "mbp-work";
+          system = "aarch64-darwin";
+          user = "ab";
+          darwin = true;
+        };
+
+        "ab@nixos-main" = mkHome {
+          name = "nixos-main";
+          system = "x86_64-linux";
+          user = "ab";
+        };
+      };
     };
 }

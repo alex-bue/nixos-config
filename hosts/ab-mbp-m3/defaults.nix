@@ -13,5 +13,6 @@
     "obsidian"
     "spotify"
     "scroll-reverser"
+    "dbeaver-community"
   ];
 }
