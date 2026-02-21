@@ -44,6 +44,7 @@ with pkgs;
   # codex # seems broken atm?
   curl
   gh
+  just
   lazygit
   nixfmt
   statix

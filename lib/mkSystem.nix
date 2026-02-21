@@ -32,32 +32,14 @@ systemFunc {
   inherit system;
 
   specialArgs = inputs // {
+    inherit inputs;
     hostName = name;
     hostUser = user;
     inherit isDarwin isLinux isWSL;
   };
 
   modules =
-    lib.optionals (!darwin) [
-      inputs.disko.nixosModules.disko
-    ]
-    ++ lib.optionals darwin [
-      inputs.nix-homebrew.darwinModules.nix-homebrew
-      {
-        nix-homebrew = {
-          inherit user;
-          enable = true;
-          taps = {
-            "homebrew/homebrew-core" = inputs.homebrew-core;
-            "homebrew/homebrew-cask" = inputs.homebrew-cask;
-            "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
-          };
-          mutableTaps = false;
-          autoMigrate = true;
-        };
-      }
-    ]
-    ++ [
+    [
       machineConfig
     ]
     ++ lib.optionals homeManager [

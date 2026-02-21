@@ -1,14 +1,47 @@
-{ pkgs, hostUser ? "ab", ... }:
+{
+  inputs,
+  pkgs,
+  hostUser ? "ab",
+  ...
+}:
 {
   imports = [
     ../common/default.nix
+    inputs.determinate.darwinModules.default
+    inputs.nix-homebrew.darwinModules.nix-homebrew
   ];
-
-  nix.enable = false;
 
   environment = {
     systemPackages = import ../common/packages.nix { inherit pkgs; };
     shells = [ pkgs.zsh ];
+  };
+
+  homebrew = {
+    enable = true;
+    onActivation = {
+      autoUpdate = true;
+      upgrade = true;
+      cleanup = "zap";
+    };
+  };
+
+  nix-homebrew = {
+    enable = true;
+    # enableRosetta = if (pkgs.stdenv.hostPlatform.system == "aarch64-darwin") then true else false;
+    autoMigrate = true;
+    user = hostUser;
+    mutableTaps = true;
+  };
+
+  # Determinate Nix darwin module configuration
+  determinateNix = {
+    enable = true;
+    determinateNixd.builder.state = "enabled";
+    customSettings = {
+      experimental-features = "nix-command flakes";
+      extra-experimental-features = "parallel-eval";
+      warn-dirty = false;
+    };
   };
 
   system = {
@@ -41,6 +74,10 @@
         "com.apple.trackpad.scaling" = 1.5;
       };
 
+      controlcenter = {
+        BatteryShowPercentage = true;
+      };
+
       dock = {
         autohide = true;
         autohide-delay = 0.0;
@@ -59,7 +96,7 @@
 
       finder = {
         AppleShowAllExtensions = true;
-        FXDefaultSearchScope = null;
+        FXDefaultSearchScope = "SCcf";
         FXPreferredViewStyle = "clmv";
         FXRemoveOldTrashItems = true;
         NewWindowTarget = "Home";
@@ -101,12 +138,5 @@
     home = "/Users/${hostUser}";
     isHidden = false;
     shell = pkgs.zsh;
-  };
-
-  homebrew = {
-    enable = true;
-    masApps = {
-      # "wireguard" = 1451685025;
-    };
   };
 }

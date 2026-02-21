@@ -1,18 +1,31 @@
-_:
 {
-  homebrew.casks = [
+  base = [
     "alfred"
-    "anki"
-    "anydesk"
-    "bitwarden"
-    "codex"
-    "dbeaver-community"
+    "docker-desktop"
     "google-chrome"
     "hiddenbar"
-    "iina"
     "karabiner-elements"
     "scroll-reverser"
     "nikitabobko/tap/aerospace"
     "visual-studio-code"
+  ];
+
+  work = [
+  ];
+
+  personal = [
+    "anki"
+    "anydesk"
+    "bitwarden"
+    "codex"
+    "discord"
+    "iina"
+    "obsidian"
+    "raycast"
+    "skim"
+    "spotify"
+    "steam"
+    "onedrive"
+    "dbeaver-community"
   ];
 }
