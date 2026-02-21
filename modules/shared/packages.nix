@@ -2,63 +2,72 @@
 
 with pkgs;
 [
-  # General packages for development and system management
-  wezterm
+  # Shell and terminal UX
   bash-completion
   bat
   btop
+  htop
+  starship
+  tmux
+  wezterm
+  zoxide
+  zsh-powerlevel10k
+
+  # Core CLI utilities
   chezmoi
   coreutils
-  eza
-  ffmpeg
   fd
   git
-  graphviz
-  imagemagick
-  neovim
-  starship
+  jq
+  ripgrep
+  tree
+  unzip
   wget
-  yazi
   yq-go
-  yt-dlp
-  zoxide
   zip
 
-  # Encryption and security tools
-  gnupg
-  bitwarden-cli
+  # Editors and navigation
+  eza
+  fzf
+  neovim
+  yazi
 
-  # Cloud-related tools and SDKs
+  # Security and secrets
+  bitwarden-cli
+  gnupg
+
+  # Containers and cloud tooling
   docker
   docker-compose
 
-  # Node.js development tools
-  nodejs_24
-
-  # Text and terminal utilities
-  htop
-  jetbrains-mono
-  nerd-fonts.jetbrains-mono
-  jq
-  nixfmt
-  ripgrep
-  tree
-  tmux
-  unzip
-  zsh-powerlevel10k
-
-  # Development tools
+  # Development and source control
+  # codex # seems broken atm?
   curl
   gh
   lazygit
-  fzf
+  nixfmt
+  statix
 
-  # Programming languages and runtimes
-  go
-  rustc
+  # Languages and runtimes
   cargo
+  go
+  nodejs_24
   openjdk
-
-  # Python packages
+  pipx
   python3
+  rustc
+
+  # Document and graphics tooling
+  ffmpeg
+  ghostscript
+  graphviz
+  imagemagick
+  poppler
+  tex-fmt
+  texliveFull
+  yt-dlp
+
+  # Typography and fonts
+  jetbrains-mono
+  nerd-fonts.jetbrains-mono
 ]
