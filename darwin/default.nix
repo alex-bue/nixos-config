@@ -75,7 +75,7 @@
       };
 
       controlcenter = {
-        BatteryShowPercentage = true;
+        BatteryShowPercentage = false;
       };
 
       dock = {
@@ -118,8 +118,6 @@
         TrackpadPinch = true;
         TrackpadRotate = true;
       };
-
-      universalaccess.reduceMotion = false;
 
       WindowManager = {
         AppWindowGroupingBehavior = true;

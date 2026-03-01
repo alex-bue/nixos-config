@@ -48,14 +48,17 @@ with pkgs;
   lazygit
   nixfmt
   statix
+  luajitPackages.luarocks
 
   # Languages and runtimes
+  tree-sitter
   cargo
   go
   nodejs_24
   openjdk
   pipx
   python3
+  php
   rustc
 
   # Document and graphics tooling
@@ -66,7 +69,6 @@ with pkgs;
   poppler
   tex-fmt
   texliveFull
-  yt-dlp
 
   # Typography and fonts
   jetbrains-mono

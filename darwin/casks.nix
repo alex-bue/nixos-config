@@ -1,6 +1,7 @@
 {
   base = [
     "alfred"
+    "betterdisplay"
     "docker-desktop"
     "google-chrome"
     "hiddenbar"
@@ -25,7 +26,9 @@
     "skim"
     "spotify"
     "steam"
+    "subsurface"
     "onedrive"
     "dbeaver-community"
+    "zotero"
   ];
 }
