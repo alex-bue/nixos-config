@@ -1,20 +1,21 @@
-{
-  inputs,
-  pkgs,
-  hostUser ? "ab",
-  ...
-}:
+{ inputs, pkgs, ... }:
 {
   imports = [
-    ../common/default.nix
     inputs.determinate.darwinModules.default
     inputs.nix-homebrew.darwinModules.nix-homebrew
   ];
 
-  environment = {
-    systemPackages = import ../common/packages.nix { inherit pkgs; };
-    shells = [ pkgs.zsh ];
-  };
+  environment.systemPackages = with pkgs; [
+    coreutils
+    curl
+    fd
+    git
+    gnupg
+    jq
+    ripgrep
+    wget
+    yq-go
+  ];
 
   homebrew = {
     enable = true;
@@ -27,13 +28,10 @@
 
   nix-homebrew = {
     enable = true;
-    # enableRosetta = if (pkgs.stdenv.hostPlatform.system == "aarch64-darwin") then true else false;
     autoMigrate = true;
-    user = hostUser;
     mutableTaps = true;
   };
 
-  # Determinate Nix darwin module configuration
   determinateNix = {
     enable = true;
     determinateNixd.builder.state = "enabled";
@@ -46,8 +44,6 @@
 
   system = {
     checks.verifyNixPath = false;
-    primaryUser = hostUser;
-    stateVersion = 5;
 
     defaults = {
       ".GlobalPreferences" = {
@@ -129,12 +125,5 @@
     };
 
     keyboard.enableKeyMapping = true;
-  };
-
-  users.users.${hostUser} = {
-    name = hostUser;
-    home = "/Users/${hostUser}";
-    isHidden = false;
-    shell = pkgs.zsh;
   };
 }
