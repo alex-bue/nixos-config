@@ -9,6 +9,9 @@
   networking.hostName = "nixos-vm";
   nixpkgs.hostPlatform = "aarch64-linux";
 
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   users.users.alex = {
     isNormalUser = true;
     extraGroups = [
