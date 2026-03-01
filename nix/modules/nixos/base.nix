@@ -3,6 +3,7 @@
   networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
+    firefox
     coreutils
     curl
     fd
