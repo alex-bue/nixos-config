@@ -10,6 +10,7 @@
     gnupg
     jq
     ripgrep
+    vim
     wget
     yq-go
   ];
