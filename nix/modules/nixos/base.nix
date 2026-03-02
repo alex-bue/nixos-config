@@ -1,5 +1,13 @@
 { pkgs, ... }:
 {
+  nix = {
+    enable = true;
+    settings = {
+      experimental-features = "nix-command flakes";
+      warn-dirty = false;
+    };
+  };
+
   networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [

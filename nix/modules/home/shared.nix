@@ -60,6 +60,7 @@
     python3
     php
     rustc
+    gcc
 
     # Document and graphics tooling
     ffmpeg

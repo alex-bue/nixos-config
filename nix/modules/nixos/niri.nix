@@ -37,6 +37,8 @@
 
   # Minimal user-facing tools for the desktop session
   environment.systemPackages = with pkgs; [
+    quickshell
+    noctalia-shell
     wezterm
     fuzzel
     mako
