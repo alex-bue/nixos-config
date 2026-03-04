@@ -4,11 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    blueprint = {
-      url = "github:numtide/blueprint";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,9 +22,24 @@
   };
 
   outputs =
-    inputs:
-    inputs.blueprint {
-      inherit inputs;
-      prefix = "nix/";
+    {
+      nixpkgs,
+      nix-darwin,
+      ...
+    }@inputs:
+    {
+      darwinConfigurations."ab-mbp-m3" = nix-darwin.lib.darwinSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/ab-mbp-m3/configuration.nix
+        ];
+      };
+
+      nixosConfigurations."nixos-vm" = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/nixos-vm/configuration.nix
+        ];
+      };
     };
 }
