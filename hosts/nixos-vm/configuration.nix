@@ -13,7 +13,7 @@ in
 
   config = {
     system.stateVersion = "24.11";
-    time.timeZone = "America/New_York";
+    time.timeZone = "Europe/Copenhagen";
 
     # VMware guest integration (host-specific)
     virtualisation.vmware.guest.enable = true;
