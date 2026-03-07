@@ -17,19 +17,11 @@ in
 
     home.packages = with pkgs; [
       bash-completion
-      bat
-      btop
-      htop
       starship
       tmux
       zoxide
       zsh-powerlevel10k
       chezmoi
-      tree
-      unzip
-      zip
-      eza
-      fzf
       neovim
       yazi
       bitwarden-cli

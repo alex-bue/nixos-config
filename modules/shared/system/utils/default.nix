@@ -14,6 +14,14 @@ in
       gnupg
       jq
       ripgrep
+      bat
+      btop
+      eza
+      fzf
+      htop
+      tree
+      unzip
+      zip
       wget
       yq-go
     ];

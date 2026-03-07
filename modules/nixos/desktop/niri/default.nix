@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.mine.nixos.desktop.niri;
 in
@@ -9,7 +14,6 @@ in
     programs.niri.enable = true;
 
     environment.systemPackages = with pkgs; [
-      quickshell
       noctalia-shell
       wezterm
       fuzzel
