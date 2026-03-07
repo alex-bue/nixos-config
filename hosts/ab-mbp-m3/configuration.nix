@@ -20,12 +20,10 @@ in
         home-manager.enable = true;
         shell.package = pkgs.zsh;
       };
-      darwin = {
-        cli-tools.homebrew = enabled;
-        system = {
-          defaults = enabled;
-          nix = enabled;
-        };
+      cli-tools.homebrew = enabled;
+      system = {
+        defaults = enabled;
+        nix = enabled;
       };
       apps = {
         aerospace = enabled;

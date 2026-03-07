@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.mine.nixos.desktop.niri;
+  cfg = config.mine.desktop.niri;
 in
 {
-  options.mine.nixos.desktop.niri.enable = lib.mkEnableOption "Enable Niri window manager";
+  options.mine.desktop.niri.enable = lib.mkEnableOption "Enable Niri window manager";
 
   config = lib.mkIf cfg.enable {
     programs.niri.enable = true;

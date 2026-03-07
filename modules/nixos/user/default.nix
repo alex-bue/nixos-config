@@ -54,7 +54,7 @@ in
       shell = user.shell.package;
     };
 
-    mine.nixos.system.shell.zsh.enable = mkIf (user.shell.package == pkgs.zsh) true;
+    mine.system.shell.zsh.enable = mkIf (user.shell.package == pkgs.zsh) true;
 
     nix.settings.trusted-users = [ user.name ];
   };

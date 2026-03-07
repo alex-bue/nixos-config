@@ -1,9 +1,9 @@
 { lib, config, ... }:
 let
-  cfg = config.mine.darwin.system.defaults;
+  cfg = config.mine.system.defaults;
 in
 {
-  options.mine.darwin.system.defaults.enable = lib.mkEnableOption "darwin system defaults";
+  options.mine.system.defaults.enable = lib.mkEnableOption "darwin system defaults";
 
   config = lib.mkIf cfg.enable {
     system.defaults = {

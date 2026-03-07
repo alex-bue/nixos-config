@@ -1,13 +1,13 @@
 { lib, config, inputs, ... }:
 let
-  cfg = config.mine.darwin.system.nix;
+  cfg = config.mine.system.nix;
 in
 {
   imports = [
     inputs.determinate.darwinModules.default
   ];
 
-  options.mine.darwin.system.nix.enable = lib.mkEnableOption "darwin nix settings";
+  options.mine.system.nix.enable = lib.mkEnableOption "darwin nix settings";
 
   config = lib.mkIf cfg.enable {
     determinateNix = {

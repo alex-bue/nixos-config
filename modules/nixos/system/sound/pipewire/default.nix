@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.mine.nixos.system.sound.pipewire;
+  cfg = config.mine.system.sound.pipewire;
 in
 {
-  options.mine.nixos.system.sound.pipewire.enable = lib.mkEnableOption "Enable PipeWire audio stack";
+  options.mine.system.sound.pipewire.enable = lib.mkEnableOption "Enable PipeWire audio stack";
 
   config = lib.mkIf cfg.enable {
     security.rtkit.enable = true;

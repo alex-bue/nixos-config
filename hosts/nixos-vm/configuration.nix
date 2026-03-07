@@ -47,25 +47,23 @@ in
           "networkmanager"
         ];
       };
-      nixos = {
-        desktop = {
-          niri = enabled;
-          addons = {
-            greetd = enabled;
-            portal = enabled;
-            session = enabled;
-          };
+      desktop = {
+        niri = enabled;
+        addons = {
+          greetd = enabled;
+          portal = enabled;
+          session = enabled;
         };
-        system = {
-          nix = enabled;
-          sound.pipewire = enabled;
-          networking.networkmanager = enabled;
-          services = {
-            openssh = enabled;
-            polkit = enabled;
-            dbus = enabled;
-            keyring = enabled;
-          };
+      };
+      system = {
+        nix = enabled;
+        sound.pipewire = enabled;
+        networking.networkmanager = enabled;
+        services = {
+          openssh = enabled;
+          polkit = enabled;
+          dbus = enabled;
+          keyring = enabled;
         };
       };
       system = {

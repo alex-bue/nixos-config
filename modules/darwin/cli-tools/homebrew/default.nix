@@ -1,13 +1,13 @@
 { lib, config, inputs, ... }:
 let
-  cfg = config.mine.darwin.cli-tools.homebrew;
+  cfg = config.mine.cli-tools.homebrew;
 in
 {
   imports = [
     inputs.nix-homebrew.darwinModules.nix-homebrew
   ];
 
-  options.mine.darwin.cli-tools.homebrew.enable = lib.mkEnableOption "darwin homebrew integration";
+  options.mine.cli-tools.homebrew.enable = lib.mkEnableOption "darwin homebrew integration";
 
   config = lib.mkIf cfg.enable {
     homebrew = {

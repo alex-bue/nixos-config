@@ -1,9 +1,9 @@
 { lib, config, ... }:
 let
-  cfg = config.mine.nixos.system.nix;
+  cfg = config.mine.system.nix;
 in
 {
-  options.mine.nixos.system.nix.enable = lib.mkEnableOption "Nix settings";
+  options.mine.system.nix.enable = lib.mkEnableOption "Nix settings";
 
   config = lib.mkIf cfg.enable {
     nix = {
