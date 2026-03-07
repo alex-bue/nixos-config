@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.mine.desktop.addons.portal;
+  cfg = config.mine.desktop.portal;
 in
 {
-  options.mine.desktop.addons.portal.enable = lib.mkEnableOption "Enable XDG portals for Wayland desktop apps";
+  options.mine.desktop.portal.enable = lib.mkEnableOption "Enable XDG portals for Wayland desktop apps";
 
   config = lib.mkIf cfg.enable {
     xdg.portal = {

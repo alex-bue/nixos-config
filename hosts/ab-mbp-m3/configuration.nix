@@ -1,13 +1,12 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 let
-  enabled = {
-    enable = true;
-  };
+  inherit (lib.alex) enabled;
 in
 {
   imports = [
     ../../modules/darwin/import.nix
     ../../modules/shared/import.nix
+    ../../modules/home/import.nix
   ];
 
   config = {

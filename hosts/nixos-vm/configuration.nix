@@ -1,14 +1,18 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
-  enabled = {
-    enable = true;
-  };
+  inherit (lib.alex) enabled disabled;
 in
 {
   imports = [
     ./hardware-configuration.nix
     ../../modules/nixos/import.nix
     ../../modules/shared/import.nix
+    ../../modules/home/import.nix
   ];
 
   config = {
@@ -43,17 +47,17 @@ in
       apps = {
         codex = enabled;
         firefox = enabled;
+        wezterm = enabled;
       };
       cli-tools = {
         git = enabled;
       };
       desktop = {
         niri = enabled;
-        addons = {
-          greetd = enabled;
-          portal = enabled;
-          session = enabled;
-        };
+        noctalia = enabled;
+        greetd = enabled;
+        portal = enabled;
+        session = enabled;
       };
       system = {
         nix = enabled;
