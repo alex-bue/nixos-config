@@ -1,11 +1,5 @@
 { user, ... }:
 {
-  imports = [
-    ../../../home/import.nix
-  ];
-
-  mine.home-manager.shared.enable = true;
-
   programs.home-manager.enable = true;
 
   home = {

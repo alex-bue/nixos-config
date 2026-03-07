@@ -9,6 +9,8 @@ in
   ];
 
   config = lib.mkIf cfg.enable {
+    mine.home-manager.shared.enable = true;
+
     home-manager = {
       useUserPackages = true;
       useGlobalPkgs = true;
