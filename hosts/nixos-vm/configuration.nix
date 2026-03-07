@@ -29,6 +29,13 @@ in
     boot.loader.efi.canTouchEfiVariables = true;
 
     mine = {
+      apps = {
+        codex = enabled;
+        firefox = enabled;
+      };
+      cli-tools = {
+        git = enabled;
+      };
       user = {
         enable = true;
         name = "alex";

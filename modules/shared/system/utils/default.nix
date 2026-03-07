@@ -10,7 +10,6 @@ in
       coreutils
       curl
       fd
-      git
       gnupg
       jq
       ripgrep
