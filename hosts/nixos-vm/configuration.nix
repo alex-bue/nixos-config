@@ -60,7 +60,6 @@ in
           nix = enabled;
           sound.pipewire = enabled;
           networking.networkmanager = enabled;
-          utils.base-packages = enabled;
           services = {
             openssh = enabled;
             polkit = enabled;
