@@ -1,6 +1,8 @@
 { pkgs, config, ... }:
 let
-  enabled = { enable = true; };
+  enabled = {
+    enable = true;
+  };
 in
 {
   imports = [
@@ -12,6 +14,11 @@ in
     networking.hostName = "ab-mbp-m3";
     nixpkgs.hostPlatform = "aarch64-darwin";
 
+    system = {
+      primaryUser = config.mine.user.name;
+      stateVersion = 5;
+    };
+
     mine = {
       user = {
         enable = true;
@@ -21,10 +28,6 @@ in
         shell.package = pkgs.zsh;
       };
       cli-tools.homebrew = enabled;
-      system = {
-        defaults = enabled;
-        nix = enabled;
-      };
       apps = {
         aerospace = enabled;
         alfred = enabled;
@@ -53,12 +56,11 @@ in
         zotero = enabled;
       };
       system = {
+        defaults = enabled;
+        nix = enabled;
         fonts = enabled;
         utils = enabled;
       };
     };
-
-    system.primaryUser = config.mine.user.name;
-    system.stateVersion = 5;
   };
 }
