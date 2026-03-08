@@ -1,14 +1,18 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
-  enabled = {
-    enable = true;
-  };
+  inherit (lib.alex) enabled disabled;
 in
 {
   imports = [
     ./hardware-configuration.nix
     ../../modules/nixos/import.nix
     ../../modules/shared/import.nix
+    ../../modules/home/import.nix
   ];
 
   config = {
@@ -29,13 +33,6 @@ in
     boot.loader.efi.canTouchEfiVariables = true;
 
     mine = {
-      apps = {
-        codex = enabled;
-        firefox = enabled;
-      };
-      cli-tools = {
-        git = enabled;
-      };
       user = {
         enable = true;
         name = "alex";
@@ -47,16 +44,25 @@ in
           "networkmanager"
         ];
       };
+      apps = {
+        codex = enabled;
+        firefox = enabled;
+        wezterm = enabled;
+      };
+      cli-tools = {
+        git = enabled;
+      };
       desktop = {
         niri = enabled;
-        addons = {
-          greetd = enabled;
-          portal = enabled;
-          session = enabled;
-        };
+        noctalia = enabled;
+        greetd = enabled;
+        portal = enabled;
+        session = enabled;
       };
       system = {
         nix = enabled;
+        fonts = enabled;
+        utils = enabled;
         sound.pipewire = enabled;
         networking.networkmanager = enabled;
         services = {
@@ -65,10 +71,6 @@ in
           dbus = enabled;
           keyring = enabled;
         };
-      };
-      system = {
-        fonts = enabled;
-        utils = enabled;
       };
     };
   };

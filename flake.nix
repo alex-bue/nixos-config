@@ -19,6 +19,17 @@
     nix-homebrew = {
       url = "github:zhaofengli/nix-homebrew";
     };
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.noctalia-qs.follows = "noctalia-qs";
+    };
+
+    noctalia-qs = {
+      url = "github:noctalia-dev/noctalia-qs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -27,16 +38,23 @@
       nix-darwin,
       ...
     }@inputs:
+    let
+      lib = nixpkgs.lib.extend (
+        self: super: {
+          alex = import ./lib { lib = self; };
+        }
+      );
+    in
     {
       darwinConfigurations."ab-mbp-m3" = nix-darwin.lib.darwinSystem {
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs lib; };
         modules = [
           ./hosts/ab-mbp-m3/configuration.nix
         ];
       };
 
       nixosConfigurations."nixos-vm" = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs lib; };
         modules = [
           ./hosts/nixos-vm/configuration.nix
         ];

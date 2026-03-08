@@ -1,11 +1,5 @@
 { user, ... }:
 {
-  imports = [
-    ../../../home/import.nix
-  ];
-
-  mine.home.shared.enable = true;
-
   programs.home-manager.enable = true;
 
   home = {
@@ -13,6 +7,13 @@
     homeDirectory = user.homeDir;
     stateVersion = "24.11";
   };
+
+  home.sessionPath = [
+    "${user.homeDir}/.nix-profile/bin"
+    "/etc/profiles/per-user/${user.name}/bin"
+    "/run/current-system/sw/bin"
+    "/nix/var/nix/profiles/default/bin"
+  ];
 
   manual.manpages.enable = false;
 }

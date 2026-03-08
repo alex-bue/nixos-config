@@ -1,16 +1,22 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 let
-  enabled = { enable = true; };
+  inherit (lib.alex) enabled;
 in
 {
   imports = [
     ../../modules/darwin/import.nix
     ../../modules/shared/import.nix
+    ../../modules/home/import.nix
   ];
 
   config = {
     networking.hostName = "ab-mbp-m3";
     nixpkgs.hostPlatform = "aarch64-darwin";
+
+    system = {
+      primaryUser = config.mine.user.name;
+      stateVersion = 5;
+    };
 
     mine = {
       user = {
@@ -21,10 +27,6 @@ in
         shell.package = pkgs.zsh;
       };
       cli-tools.homebrew = enabled;
-      system = {
-        defaults = enabled;
-        nix = enabled;
-      };
       apps = {
         aerospace = enabled;
         alfred = enabled;
@@ -53,12 +55,11 @@ in
         zotero = enabled;
       };
       system = {
+        defaults = enabled;
+        nix = enabled;
         fonts = enabled;
         utils = enabled;
       };
     };
-
-    system.primaryUser = config.mine.user.name;
-    system.stateVersion = 5;
   };
 }
