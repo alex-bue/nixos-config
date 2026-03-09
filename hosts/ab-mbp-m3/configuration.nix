@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   inherit (lib.alex) enabled;
 in
@@ -38,6 +43,7 @@ in
         dbeaverCommunity = enabled;
         discord = enabled;
         dockerDesktop = enabled;
+        ghostty = enabled;
         googleChrome = enabled;
         hiddenbar = enabled;
         iina = enabled;

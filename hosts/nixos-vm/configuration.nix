@@ -48,6 +48,7 @@ in
         codex = enabled;
         firefox = enabled;
         wezterm = enabled;
+        ghostty = enabled;
       };
       cli-tools = {
         git = enabled;
