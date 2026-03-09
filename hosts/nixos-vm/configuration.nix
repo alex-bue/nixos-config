@@ -54,8 +54,12 @@ in
         git = enabled;
       };
       desktop = {
-        niri = enabled;
+        niri = {
+          enable = true;
+          home = true;
+        };
         noctalia = enabled;
+        dms = disabled;
         greetd = enabled;
         portal = enabled;
         session = enabled;
