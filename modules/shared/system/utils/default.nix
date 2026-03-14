@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.mine.system.utils;
 in
@@ -17,6 +22,7 @@ in
       btop
       eza
       fzf
+      fastfetch
       htop
       tree
       unzip

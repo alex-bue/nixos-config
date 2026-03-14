@@ -31,12 +31,12 @@ in
           };
 
           outputs."Virtual-1" = {
-            mode = {
-              width = 2560;
-              height = 1600;
-              refresh = 60.0;
-            };
-            scale = 2;
+            # mode = {
+            #   width = 2560;
+            #   height = 1600;
+            #   refresh = 60.0;
+            # };
+            scale = 1.5;
             transform.rotation = 0;
             position = {
               x = 1280;
@@ -88,6 +88,15 @@ in
 
           window-rules = [
             {
+              geometry-corner-radius = {
+                top-left = 20.0;
+                top-right = 20.0;
+                bottom-left = 20.0;
+                bottom-right = 20.0;
+              };
+              clip-to-geometry = true;
+            }
+            {
               matches = [ { app-id = "^org\\.wezfurlong\\.wezterm$"; } ];
               default-column-width = { };
             }
@@ -106,8 +115,8 @@ in
             "Mod+Shift+Slash".action."show-hotkey-overlay" = [ ];
 
             "Mod+Return" = {
-              hotkey-overlay.title = "Open a Terminal: wezterm";
-              action.spawn = "wezterm";
+              hotkey-overlay.title = "Open a Terminal: ghostty";
+              action.spawn = "ghostty";
             };
             "Mod+Space" = {
               hotkey-overlay.title = "Run an Application: fuzzel";
@@ -191,32 +200,31 @@ in
             "Mod+Right".action."focus-column-right" = [ ];
             "Mod+H".action."focus-column-left" = [ ];
             "Mod+L".action."focus-column-right" = [ ];
-
-            "Mod+Ctrl+Left".action."move-column-left" = [ ];
-            "Mod+Ctrl+Down".action."move-window-down" = [ ];
-            "Mod+Ctrl+Up".action."move-window-up" = [ ];
-            "Mod+Ctrl+Right".action."move-column-right" = [ ];
-            "Mod+Ctrl+H".action."move-column-left" = [ ];
-            "Mod+Ctrl+L".action."move-column-right" = [ ];
-
             "Mod+J".action."focus-window-or-workspace-down" = [ ];
             "Mod+K".action."focus-window-or-workspace-up" = [ ];
-            "Mod+Ctrl+J".action."move-window-down-or-to-workspace-down" = [ ];
-            "Mod+Ctrl+K".action."move-window-up-or-to-workspace-up" = [ ];
+            "Mod+Shift+J".action."move-window-down-or-to-workspace-down" = [ ];
+            "Mod+Shift+K".action."move-window-up-or-to-workspace-up" = [ ];
+
+            "Mod+Shift+Left".action."move-column-left" = [ ];
+            "Mod+Shift+Down".action."move-window-down" = [ ];
+            "Mod+Shift+Up".action."move-window-up" = [ ];
+            "Mod+Shift+Right".action."move-column-right" = [ ];
+            "Mod+Shift+H".action."move-column-left" = [ ];
+            "Mod+Shift+L".action."move-column-right" = [ ];
 
             "Mod+Home".action."focus-column-first" = [ ];
             "Mod+End".action."focus-column-last" = [ ];
             "Mod+Ctrl+Home".action."move-column-to-first" = [ ];
             "Mod+Ctrl+End".action."move-column-to-last" = [ ];
 
-            "Mod+Shift+Left".action."focus-monitor-left" = [ ];
-            "Mod+Shift+Down".action."focus-monitor-down" = [ ];
-            "Mod+Shift+Up".action."focus-monitor-up" = [ ];
-            "Mod+Shift+Right".action."focus-monitor-right" = [ ];
-            "Mod+Shift+H".action."focus-monitor-left" = [ ];
-            "Mod+Shift+J".action."focus-monitor-down" = [ ];
-            "Mod+Shift+K".action."focus-monitor-up" = [ ];
-            "Mod+Shift+L".action."focus-monitor-right" = [ ];
+            "Mod+Ctrl+Left".action."focus-monitor-left" = [ ];
+            "Mod+Ctrl+Down".action."focus-monitor-down" = [ ];
+            "Mod+Ctrl+Up".action."focus-monitor-up" = [ ];
+            "Mod+Ctrl+Right".action."focus-monitor-right" = [ ];
+            "Mod+Ctrl+H".action."focus-monitor-left" = [ ];
+            "Mod+Ctrl+J".action."focus-monitor-down" = [ ];
+            "Mod+Ctrl+K".action."focus-monitor-up" = [ ];
+            "Mod+Ctrl+L".action."focus-monitor-right" = [ ];
 
             "Mod+Shift+Ctrl+Left".action."move-column-to-monitor-left" = [ ];
             "Mod+Shift+Ctrl+Down".action."move-column-to-monitor-down" = [ ];

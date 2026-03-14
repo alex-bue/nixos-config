@@ -25,7 +25,7 @@ in
             barType = "simple";
             position = "top";
             monitors = [ ];
-            density = "mini";
+            density = "default";
             showOutline = false;
             showCapsule = true;
             capsuleOpacity = 1;
@@ -40,7 +40,7 @@ in
             marginHorizontal = 4;
             frameThickness = 8;
             frameRadius = 12;
-            outerCorners = true;
+            outerCorners = false;
             hideOnOverview = false;
             displayMode = "always_visible";
             autoHideDelay = 500;
@@ -48,9 +48,6 @@ in
             showOnWorkspaceSwitch = true;
             widgets = {
               left = [
-                {
-                  id = "Launcher";
-                }
                 {
                   id = "Clock";
                 }
@@ -74,16 +71,16 @@ in
                   id = "Tray";
                 }
                 {
-                  id = "NotificationHistory";
-                }
-                {
-                  id = "Battery";
+                  id = "Launcher";
                 }
                 {
                   id = "Volume";
                 }
                 {
-                  id = "Brightness";
+                  id = "NotificationHistory";
+                }
+                {
+                  id = "Battery";
                 }
                 {
                   id = "ControlCenter";
@@ -173,11 +170,11 @@ in
             boxBorderEnabled = false;
             panelBackgroundOpacity = 0.93;
             panelsAttachedToBar = true;
-            settingsPanelMode = "attached";
-            settingsPanelSideBarCardStyle = false;
+            settingsPanelMode = "centered";
+            settingsPanelSideBarCardStyle = true;
           };
           location = {
-            name = "Tokyo";
+            name = "Copenhagen";
             weatherEnabled = true;
             weatherShowEffects = true;
             useFahrenheit = false;
@@ -245,7 +242,7 @@ in
             favorites = [ ];
           };
           appLauncher = {
-            enableClipboardHistory = false;
+            enableClipboardHistory = true;
             autoPasteClipboard = false;
             enableClipPreview = true;
             clipboardWrapText = true;
@@ -317,7 +314,7 @@ in
                 id = "audio-card";
               }
               {
-                enabled = false;
+                enabled = true;
                 id = "brightness-card";
               }
               {
