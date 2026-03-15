@@ -26,8 +26,9 @@ in
           };
           bar = {
             barType = "simple";
-            density = "default";
+            density = "compact";
             outerCorners = false;
+            showCapsule = false;
             widgets = {
               left = [
                 {
@@ -35,6 +36,7 @@ in
                 }
                 {
                   id = "SystemMonitor";
+                  compactMode = false;
                 }
                 {
                   id = "ActiveWindow";
@@ -53,16 +55,16 @@ in
                   id = "Tray";
                 }
                 {
-                  id = "Launcher";
+                  id = "NotificationHistory";
                 }
                 {
                   id = "Volume";
                 }
                 {
-                  id = "NotificationHistory";
+                  id = "Battery";
                 }
                 {
-                  id = "Battery";
+                  id = "Launcher";
                 }
                 {
                   id = "ControlCenter";

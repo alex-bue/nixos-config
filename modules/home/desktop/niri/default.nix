@@ -127,13 +127,14 @@ in
                 action.spawn = "ghostty";
               };
               "Mod+Space" = {
-                hotkey-overlay.title = "Run an Application: vicinae";
+                hotkey-overlay.title = "Open Launcher: vicinae";
                 action.spawn = [
                   "vicinae"
                   "toggle"
                 ];
               };
               "Mod+V" = {
+                hotkey-overlay.title = "Open Clipboard (vicinae)";
                 action.spawn = [
                   "vicinae"
                   "vicinae://extensions/vicinae/clipboard/history"
