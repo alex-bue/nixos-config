@@ -58,6 +58,8 @@ in
           enable = true;
           home = true;
         };
+        rofi = disabled;
+        vicinae = enabled;
         noctalia = enabled;
         dms = disabled;
         greetd = enabled;
