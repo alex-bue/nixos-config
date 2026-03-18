@@ -63,7 +63,6 @@ in
         noctalia = enabled;
         dms = disabled;
         greetd = enabled;
-        portal = enabled;
         session = enabled;
       };
       system = {
