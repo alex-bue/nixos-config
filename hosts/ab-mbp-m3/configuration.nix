@@ -48,6 +48,7 @@ in
         hiddenbar = enabled;
         iina = enabled;
         karabinerElements = enabled;
+        logiOptions = enabled;
         obsidian = enabled;
         onedrive = enabled;
         raycast = enabled;
